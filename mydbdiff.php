@@ -141,7 +141,7 @@ class MyDBDiff
 	}
 	function getFieldPlainSpec(&$spec)
 	{
-		return '`'.$spec['COLUMN_NAME']."` ".$spec['COLUMN_TYPE'].($spec['IS_NULLABLE']?' null ':' ') . (empty($spec['COLUMN_DEFAULT'])?' ':' default '.$spec['COLUMN_DEFAULT']). $spec['COLLATION_NAME'] ;
+		return '`'.$spec['COLUMN_NAME']."` ".$spec['COLUMN_TYPE'].($spec['IS_NULLABLE']?' null ':' ') . (empty($spec['COLUMN_DEFAULT'])?' ':' default \''.$spec['COLUMN_DEFAULT'] .'\'') ;
 	}
 	function getFieldName(&$spec)
 	{
