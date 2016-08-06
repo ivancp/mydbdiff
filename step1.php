@@ -1,8 +1,3 @@
-<html>
-<head>
-<title>Mydbdiff tool <?=$version?></title>
-</head>
-<body>
 <?php
 require "mydbdiff.php";
 
@@ -11,37 +6,32 @@ $diff = new MyDBDiff();
 $diff->getPostParams();
 $db1 = $diff->testSource();
 $db2 = $diff->testDest();
-?>
-<h1>Mydbdiff tool v0.1</h1>
 
-<h2>Original DB</h2>
-<?php
-echo "Testing connection to original db ... ";
+$result = array();
+
+$message = '';
 if($db1) 
-	echo "OK";
-else
-	echo "FAIL";
-?>
+	$result['source'] ="ok";
+else{
+	$message .= "Can't connect to source database\n";	
+	$result['source'] = "fail";
+}
 
-
-<h2>My  DB</h2>
-
-
-<?php
-echo "Testing connection to my db ... ";
 if($db2) 
-	echo "OK";
-else
-	echo "FAIL";
+	$result['dest'] = "ok";
+else{
+	$message .= "Can't connect to destination database\n";	
+	$result['dest'] = "fail";
+}
 
 
 if($db1 && $db2)
 {
-echo '<br><br>
-	<form action="step2.php">
-	<input type="submit" value="Continue to step 2">
-	</form>';
+	$result['result'] = 'ok';
+}else{
+	$result['result'] = 'fail';
 }
-?>
-</body>
-</html>
+
+$result['message'] = $message;
+
+echo json_encode($result);
